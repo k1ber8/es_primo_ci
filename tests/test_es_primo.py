@@ -1,5 +1,5 @@
 import pytest
-from es_primo import es_primo
+from src.es_primo import es_primo
 
 def test_numero_primo():
     """Caso correcto"""
