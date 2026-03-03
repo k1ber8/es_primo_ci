@@ -1,0 +1,20 @@
+import pytest
+from es_primo import es_primo
+
+
+def test_numero_primo():
+    assert es_primo(7) is True
+
+
+def test_numero_no_primo():
+    assert es_primo(8) is False
+
+
+def test_error_numero_menor_que_dos():
+    with pytest.raises(ValueError):
+        es_primo(1)
+
+
+def test_error_tipo_incorrecto():
+    with pytest.raises(TypeError):
+        es_primo("10")
