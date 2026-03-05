@@ -3,7 +3,7 @@ from src.es_primo import es_primo
 
 def test_numero_primo():
     """Caso correcto"""
-    assert es_primo(7) is False
+    assert es_primo(7) is True
 
 
 def test_numero_no_primo():
