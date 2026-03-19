@@ -1,0 +1,45 @@
+name: CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  release-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Dar permisos a scripts
+        run: chmod +x scripts/*.sh
+
+      - name: Generar entorno de liberación
+        run: ./scripts/setup_release_env.sh
+
+      - name: Ejecutar pruebas en entorno de liberación
+        run: ./scripts/test_release.sh
+
+      - name: Generar artefacto de despliegue
+        run: ./scripts/build_site.sh
+
+      - name: Subir artefacto de Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Desplegar en GitHub Pages
+        uses: actions/deploy-pages@v4
